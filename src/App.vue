@@ -1,31 +1,79 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div id="app">
+        <el-container id="main-page">
+            <el-header id="header-container">
+                <NavHeader />
+            </el-header>
+            <el-container class="main-container">
+                <el-aside id="aside-container" width="200px">
+                    <AsideList />
+                </el-aside>
+                <el-main id="main-view">
+                    <router-view />
+                </el-main>
+            </el-container>
+        </el-container>
     </div>
-    <router-view/>
-  </div>
 </template>
 
+<script>
+import NavHeader from '@/components/NavHeader.vue';
+import AsideList from '@/components/AsideList.vue';
+import HelloWorld from '@/components/HelloWorld.vue';
+
+export default {
+    name: 'app',
+    components: {
+        NavHeader,
+        AsideList,
+        HelloWorld,
+    }
+};
+</script>
+
 <style>
+html {
+    box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+html,
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: "Avenir", Helvetica, Arial, sans-serif;
+}
+
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+#main-page {
+    height: 100vh;
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+#aside-container {
+    border-right: solid 1px #e6e6e6;
+}
+
+#main-view {
+    background-color: white;
+    justify-content: center;
+}
+
+#header-container {
+    background-color: #409eff;
+}
+
+.main-container {
+    justify-content: space-between;
 }
 </style>
