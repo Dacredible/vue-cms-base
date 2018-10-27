@@ -1,5 +1,6 @@
 import Axios from 'axios';
 import Cookie from 'js-cookie';
+import router from '@/router/index';
 
 const api = Axios.create({
     baseURL: process.env.VUE_APP_API_URL,
@@ -20,5 +21,23 @@ api.interceptors.request.use(
     }
 );
 
+api.interceptors.response.use(
+    response => response,
+    (err) => {
+        console.log(err.response.status);
+        if (err.response) {
+            switch (err.response.status) {
+            case 401:
+                router.replace({
+                    path: '/login',
+                    query: { redirect: router.currentRoute.fullPath }
+                });
+                break;
+            default:
+                console.error('error');
+            }
+        }
+    }
+);
 
 export default api;
