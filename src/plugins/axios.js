@@ -28,10 +28,12 @@ api.interceptors.response.use(
         if (err.response) {
             switch (err.response.status) {
             case 401:
-                router.replace({
-                    path: '/login',
-                    query: { redirect: router.currentRoute.fullPath }
-                });
+                if (router.currentRoute.path !== '/login') {
+                    router.replace({
+                        path: '/login',
+                        query: { redirect: router.currentRoute.fullPath }
+                    });
+                }
                 break;
             default:
                 console.error('error');

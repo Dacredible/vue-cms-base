@@ -33,6 +33,7 @@
                     @click.native.prevent="handleLogin"
                 >Sign in</el-button>
             </el-form-item>
+            <el-alert v-if="isFailed" title="wrong username or password" type="error"></el-alert>
         </el-form>
     </div>
 </template>
@@ -49,7 +50,8 @@ export default {
             },
             pwdType: 'password',
             loading: false,
-            redirect: undefined
+            redirect: undefined,
+            isFailed: false
         };
     },
     watch: {
@@ -71,12 +73,13 @@ export default {
                 password: this.loginForm.password
             })
                 .then((res) => {
-                    console.log(res);
+                    this.isFailed = false;
                     Cookie.set('api_token', res.data.payload);
                     this.loading = false;
                     this.$router.push({ path: this.redirect || '/' });
                 })
                 .catch((err) => {
+                    this.isFailed = true;
                     console.error(err);
                     this.loading = false;
                 });
